@@ -1,0 +1,34 @@
+package com.airline.Airline.Dto;
+
+
+import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.airline.Airline.validation.FlightScheduleRegister;
+
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.NotNull;
+
+public record FlightScheduleDto(
+		Integer flightScheduleId,
+		@NotNull(message="Flight Id is required",groups={FlightScheduleRegister.class})
+		Integer flightId,
+		
+
+        @DateTimeFormat(pattern="yyyy-MM-dd")
+		@NotNull(message="Date is required",  groups={FlightScheduleRegister.class})
+		@FutureOrPresent(message="Schedule date should be present or future",groups={FlightScheduleRegister.class})
+		Date date,
+
+		@NotNull(message="Bussiness class booked discount is required",groups={FlightScheduleRegister.class})
+		Integer bussinessClassBookedDiscount,
+		
+		@NotNull(message="Economy class booked discount is required",groups={FlightScheduleRegister.class})
+		Integer economyClassBookedDiscount,
+		
+		@NotNull(message="Executive class booked discount is required",groups={FlightScheduleRegister.class})
+		Integer executiveClassBookedDiscount
+		){
+
+}

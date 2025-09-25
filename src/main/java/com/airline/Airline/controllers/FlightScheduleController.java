@@ -1,0 +1,80 @@
+package com.airline.Airline.controllers;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.core.annotation.MergedAnnotations.Search;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.airline.Airline.Dto.FlightScheduleDto;
+import com.airline.Airline.Dto.SearchDto;
+import com.airline.Airline.entities.FlightSchedule;
+import com.airline.Airline.converter.FlightDtoToFlightConverter;
+import com.airline.Airline.converter.FlightSchduleDtoToFlightSchedule;
+import com.airline.Airline.converter.FlightSchduleToFlightScheduleDto;
+import com.airline.Airline.converter.FlightToFlightDtoConverter;
+import com.airline.Airline.repositories.FlightSchduleRepository;
+import com.airline.Airline.service.FlightSchduleService;
+import com.airline.Airline.System.Result;
+import com.airline.Airline.System.StatusCode;
+import com.airline.Airline.validation.FlightScheduleRegister;
+import com.airline.Airline.validation.SearchFlight;
+
+@RestController
+public class FlightScheduleController {
+
+	FlightSchduleService flightSchduleService;
+
+	FlightSchduleToFlightScheduleDto flightSchduleToFlightScheduleDto;
+
+	FlightSchduleDtoToFlightSchedule flightSchduleDtoToFlightSchedule;
+
+	public FlightScheduleController(FlightSchduleService flightSchduleService,
+			FlightSchduleToFlightScheduleDto flightSchduleToFlightScheduleDto,
+			FlightSchduleDtoToFlightSchedule flightSchduleDtoToFlightSchedule) {
+		super();
+		this.flightSchduleService = flightSchduleService;
+		this.flightSchduleToFlightScheduleDto = flightSchduleToFlightScheduleDto;
+		this.flightSchduleDtoToFlightSchedule = flightSchduleDtoToFlightSchedule;
+	}
+
+	@PostMapping("/admin/flightSchdule")
+	public Result addFlightSchdule(
+			@Validated(FlightScheduleRegister.class) @RequestBody FlightScheduleDto flightScheduleDto) {
+		FlightSchedule flightSchedule = this.flightSchduleDtoToFlightSchedule.convert(flightScheduleDto);
+		FlightSchedule saved = this.flightSchduleService.schduleFlight(flightSchedule);
+		FlightScheduleDto savedDto = this.flightSchduleToFlightScheduleDto.convert(saved);
+		return new Result(true, StatusCode.SUCCESS, "Flight is scheduled successfully", savedDto);
+	}
+
+	@GetMapping("/public/flightSchdule/{flightSchduleId}")
+	public Result getFlightSchdule(@PathVariable Integer flightSchduleId) {
+		FlightSchedule flightSchdule = this.flightSchduleService.getFlightSchduleById(flightSchduleId);
+		FlightScheduleDto flightSchduleDto = this.flightSchduleToFlightScheduleDto.convert(flightSchdule);
+		return new Result(true, StatusCode.SUCCESS, "Found the schduled flight", flightSchduleDto);
+	}
+
+	@GetMapping("/public/flightSchdule")
+	public Result getAllFlightSchdule() {
+		List<FlightSchedule> allSchdule = this.flightSchduleService.getAllSchdule();
+		List<FlightScheduleDto> allSchduleDto = allSchdule.stream()
+				.map((flightSchedule) -> this.flightSchduleToFlightScheduleDto.convert(flightSchedule))
+				.collect(Collectors.toList());
+
+		return new Result(true, StatusCode.SUCCESS, "Found all schedule", allSchduleDto);
+	}
+
+	@PostMapping("/public/flightSchdule/searchFlight")
+	public Result searchFlight(@Validated(SearchFlight.class) @RequestBody SearchDto searchDto) {
+		List<FlightSchedule> foundFlight = this.flightSchduleService.searchFlight(searchDto);
+		return new Result(true, StatusCode.SUCCESS, "Found flights", foundFlight);
+	}
+
+}
