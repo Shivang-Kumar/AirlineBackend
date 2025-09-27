@@ -1,11 +1,13 @@
 package com.airline.Airline.entities;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -17,11 +19,11 @@ public class FlightSchedule {
 Integer flightScheduleId;
 
 
-//Foreign key logic to be added
-Integer flightId;
+@OneToOne
+Flight flight;
 
 
-Date dateOfTravel;
+LocalDateTime dateOfTravel;
 Integer businessClassBookedDiscount;
 Integer economyClassBookedDiscount;
 Integer executiveClassBookedDiscount;
@@ -32,16 +34,16 @@ public Integer getFlightScheduleId() {
 public void setFlightScheduleId(Integer flightScheduleId) {
 	this.flightScheduleId = flightScheduleId;
 }
-public Integer getFlightId() {
-	return flightId;
+public Flight getFlight() {
+	return flight;
 }
-public void setFlightId(Integer flightId) {
-	this.flightId = flightId;
+public void setFligt(Flight flight) {
+	this.flight = flight;
 }
-public Date getDateOfTravel() {
+public LocalDateTime getDateOfTravel() {
 	return dateOfTravel;
 }
-public void setDateOfTravel(Date dateOfTravel) {
+public void setDateOfTravel(LocalDateTime dateOfTravel) {
 	this.dateOfTravel = dateOfTravel;
 }
 public Integer getBusinessClassBookedDiscount() {

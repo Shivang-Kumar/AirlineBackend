@@ -9,8 +9,7 @@ import com.airline.Airline.entities.Booking;
 
 public interface BookingRepository extends JpaRepository<Booking,Integer> {
 
-	List<Booking> findByUserId(Integer userId);
-	
+
 }
 
 

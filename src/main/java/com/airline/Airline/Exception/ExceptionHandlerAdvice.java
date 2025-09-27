@@ -52,5 +52,11 @@ public class ExceptionHandlerAdvice {
 	{
 		return new Result(false,StatusCode.CONFLICT,ex.getMessage(),null);
 	}
+	
+	@ExceptionHandler(NoSeatAvailableException.class)
+	Result handleNoSeatAvailableException(NoSeatAvailableException ex)
+	{
+		return new Result(false,StatusCode.NOT_FOUND,ex.getMessage());
+	}
 
 }

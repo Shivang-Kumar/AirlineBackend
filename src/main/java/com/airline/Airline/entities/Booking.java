@@ -1,12 +1,17 @@
 package com.airline.Airline.entities;
 
 
-import java.util.Date;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -17,79 +22,162 @@ public class Booking {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
     Integer bookingId;
-   
+    
 	
-	//Later to add foreign key constraints
-	Integer flightId;
-	Integer userId;
+	@OneToOne
+	User user;
+	
 	Integer noOfSeats;
-	String  seatCategory;
-	Date dateOfTravel;
+
+	@OneToMany(mappedBy="booking")
+	List<Passenger> passengers;
+	LocalDateTime dateOfBooking;
 	String bookingStatus;
 	Integer bookingAmount;
+	
+	@OneToOne
+	FlightSchedule flightSchedule;
+	String  seatClass;
+	String paymentStatus;
+	
+	
 	public Booking() {
 		super();
 	}
-	public Booking(Integer bookingId, Integer flightId, Integer userId, Integer noOfSeats, String seatCategory,
-			Date dateOfTravel, String bookingStatus, Integer bookingAmount) {
+
+
+	public Booking(Integer bookingId, User user, Integer noOfSeats, List<Passenger> passengers, LocalDateTime dateOfBooking,
+			String bookingStatus, Integer bookingAmount, FlightSchedule flightSchedule, String seatClass,
+			String paymentStatus) {
 		super();
 		this.bookingId = bookingId;
-		this.flightId = flightId;
-		this.userId = userId;
+		this.user = user;
 		this.noOfSeats = noOfSeats;
-		this.seatCategory = seatCategory;
-		this.dateOfTravel = dateOfTravel;
+		this.passengers = passengers;
+		this.dateOfBooking = dateOfBooking;
 		this.bookingStatus = bookingStatus;
 		this.bookingAmount = bookingAmount;
+		this.flightSchedule = flightSchedule;
+		this.seatClass = seatClass;
+		this.paymentStatus = paymentStatus;
 	}
+
+
 	public Integer getBookingId() {
 		return bookingId;
 	}
+
+
 	public void setBookingId(Integer bookingId) {
 		this.bookingId = bookingId;
 	}
-	public Integer getFlightId() {
-		return flightId;
+
+
+	public User getUser() {
+		return user;
 	}
-	public void setFlightId(Integer flightId) {
-		this.flightId = flightId;
+
+
+	public void setUser(User user) {
+		this.user = user;
 	}
-	public Integer getUserId() {
-		return userId;
-	}
-	public void setUserId(Integer userId) {
-		this.userId = userId;
-	}
+
+
 	public Integer getNoOfSeats() {
 		return noOfSeats;
 	}
+
+
 	public void setNoOfSeats(Integer noOfSeats) {
 		this.noOfSeats = noOfSeats;
 	}
-	public String getSeatCategory() {
-		return seatCategory;
+
+
+	public List<Passenger> getPassengers() {
+		return passengers;
 	}
-	public void setSeatCategory(String seatCategory) {
-		this.seatCategory = seatCategory;
+
+
+	public void setPassengers(List<Passenger> passengers) {
+		this.passengers = passengers;
 	}
-	public Date getDateOfTravel() {
-		return dateOfTravel;
+
+
+	public LocalDateTime getDateOfBooking() {
+		return dateOfBooking;
 	}
-	public void setDateOfTravel(Date dateOfTravel) {
-		this.dateOfTravel = dateOfTravel;
+
+
+	public void setDateOfBooking(LocalDateTime dateOfBooking) {
+		this.dateOfBooking = dateOfBooking;
 	}
+
+
 	public String getBookingStatus() {
 		return bookingStatus;
 	}
+
+
 	public void setBookingStatus(String bookingStatus) {
 		this.bookingStatus = bookingStatus;
 	}
+
+
 	public Integer getBookingAmount() {
 		return bookingAmount;
 	}
+
+
 	public void setBookingAmount(Integer bookingAmount) {
 		this.bookingAmount = bookingAmount;
 	}
+
+
+	public FlightSchedule getFlightSchedule() {
+		return flightSchedule;
+	}
+
+
+	public void setFlightSchedule(FlightSchedule flightSchedule) {
+		this.flightSchedule = flightSchedule;
+	}
+
+
+	public String getSeatClass() {
+		return seatClass;
+	}
+
+
+	public void setSeatClass(String seatClass) {
+		this.seatClass = seatClass;
+	}
+
+
+	public String getPaymentStatus() {
+		return paymentStatus;
+	}
+
+
+	public void setPaymentStatus(String paymentStatus) {
+		this.paymentStatus = paymentStatus;
+	}
+
+
+	@Override
+	public String toString() {
+		return "Booking [bookingId=" + bookingId + ", user=" + user + ", noOfSeats=" + noOfSeats + ", passengers="
+				+ passengers + ", dateOfBooking=" + dateOfBooking + ", bookingStatus=" + bookingStatus
+				+ ", bookingAmount=" + bookingAmount + ", flightSchedule=" + flightSchedule + ", seatClass="
+				+ seatClass + ", paymentStatus=" + paymentStatus + "]";
+	}
+   
 	
+	
+	
+
+
+
+	
+
 	
 }

@@ -16,7 +16,7 @@ public class FlightToFlightDtoConverter  implements Converter<Flight, FlightDto>
 	
 		FlightDto flightDto=new FlightDto(
 				source.getFlightId(),
-				source.getCarrierId(),
+				source.getCarrier().getCarrierID(),
 				source.getOrigin(),
 				source.getDestination(),
 				source.getAirFare(),

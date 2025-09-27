@@ -1,7 +1,8 @@
 package com.airline.Airline.Dto;
 
 
-import java.util.Date;
+
+import java.time.LocalDateTime;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -19,7 +20,7 @@ public record FlightScheduleDto(
         @DateTimeFormat(pattern="yyyy-MM-dd")
 		@NotNull(message="Date is required",  groups={FlightScheduleRegister.class})
 		@FutureOrPresent(message="Schedule date should be present or future",groups={FlightScheduleRegister.class})
-		Date date,
+		LocalDateTime date,
 
 		@NotNull(message="Bussiness class booked discount is required",groups={FlightScheduleRegister.class})
 		Integer bussinessClassBookedDiscount,

@@ -14,7 +14,7 @@ public class FlightSchduleToFlightScheduleDto implements Converter<FlightSchedul
 	public FlightScheduleDto convert(FlightSchedule source) {
 	
 		FlightScheduleDto  flightSchduleDto=new FlightScheduleDto(
-				source.getFlightScheduleId(),source.getFlightId(),source.getDateOfTravel(),source.getBusinessClassBookedDiscount(),source.getEconomyClassBookedDiscount(),source.getExecutiveClassBookedDiscount());
+				source.getFlightScheduleId(),source.getFlight().getFlightId(),source.getDateOfTravel(),source.getBusinessClassBookedDiscount(),source.getEconomyClassBookedDiscount(),source.getExecutiveClassBookedDiscount());
 		
 		return flightSchduleDto;	
 		

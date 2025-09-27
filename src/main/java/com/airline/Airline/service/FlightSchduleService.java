@@ -60,8 +60,8 @@ public class FlightSchduleService {
 		List<FlightSchedule> ans = new ArrayList<>();
 		for (FlightSchedule s : schedule) {
 			for (Flight f : flights) {
-			  System.out.println("ABCD            :"+s.getFlightId()+"          "+f.getFlightId()+"         "+s.getDateOfTravel().getDate()+"          "+searchDto.date().getDate());
-				if (s.getFlightId() == f.getFlightId() && s.getDateOfTravel().getDate() == searchDto.date().getDate()) {
+			  System.out.println("ABCD            :"+s.getFlight().getFlightId()+"          "+f.getFlightId()+"         "+s.getDateOfTravel()+"          "+searchDto.date());
+				if (s.getFlight().getFlightId() == f.getFlightId() && s.getDateOfTravel() == searchDto.date()) {
 					ans.add(s);
 				}
 			}

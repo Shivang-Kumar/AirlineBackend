@@ -7,6 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -19,7 +20,8 @@ public class Flight {
 	     Integer flightId;
 	    
 	    
-	    Integer carrierId; // FK (link to Carrier later if needed)
+	    @OneToOne
+	    Carrier carrier; 
 
 	    
 	    String origin;
@@ -45,12 +47,12 @@ public class Flight {
 
 
 
-		public Flight(Integer flightId, Integer carrierId, String origin, String destination, Integer airFare,
+		public Flight(Integer flightId, Carrier carrier, String origin, String destination, Integer airFare,
 				Integer seatCapacityEconomyClass, Integer seatCapacityBusinessClass,
 				Integer seatCapacityExecutiveClass) {
 			super();
 			this.flightId = flightId;
-			this.carrierId = carrierId;
+			this.carrier = carrier;
 			this.origin = origin;
 			this.destination = destination;
 			this.airFare = airFare;
@@ -73,14 +75,14 @@ public class Flight {
 
 
 
-		public Integer getCarrierId() {
-			return carrierId;
+		public Carrier getCarrier() {
+			return carrier;
 		}
 
 
 
-		public void setCarrierId(Integer carrierId) {
-			this.carrierId = carrierId;
+		public void setCarrier(Carrier carrier) {
+			this.carrier = carrier;
 		}
 
 

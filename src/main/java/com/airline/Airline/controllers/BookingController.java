@@ -50,39 +50,40 @@ public class BookingController {
 	public Result addBooking( @Validated(BookingRegister.class)  @RequestBody BookingDto bookingDto)
 	{
 		Booking booking=this.bookingDtoToBookingConverter.convert(bookingDto);
+		booking.setBookingAmount(this.bookingService.calculateBookingAmount(booking).intValue());
 		Booking savedBooking=this.bookingService.bookFlight(booking);
 		BookingDto savedBookingDto=this.bookingToBookingDtoConverter.convert(savedBooking);
 		return new Result(true,StatusCode.SUCCESS,"Booking Successfull",savedBookingDto);
 	}
-	
-	
-	//Calculate booking amount
-	@PostMapping("/bookingAmount")
-	public Result getBookingAmount(@Validated(BookingAmount.class) @RequestBody BookingDto bookingDto)
-	{
-		Double amount=this.bookingService.calculateBookingAmount(bookingDto);
-		return new Result(true,StatusCode.SUCCESS,"Total booking amount has been calculated",amount);
-	}
-	
-	
-	@GetMapping("/cancel/{bookingId}")
-	public Result cancelBooking(@PathVariable Integer bookingId)
-	{
-		Double  refundAmount=this.bookingService.cancelBookingById(bookingId);
-		return  new Result(true,StatusCode.SUCCESS,"Ticket cancelled Successfully, refund amount will be delivered",refundAmount);
-		
-	}
-	
-	@GetMapping("/{userId}")
-	public Result getAllBookings(@PathVariable Integer userId)
-	{
-		List<Booking> foundAllBooking=this.bookingService.getAllBooking(userId);
-	      List<BookingDto>  foundAllBookingDto=foundAllBooking.stream()
-	    		  .map((booking) -> this.bookingToBookingDtoConverter.convert(booking))
-	    		  .collect(Collectors.toList());
-		 
-		  return new Result(true,StatusCode.SUCCESS,"All bookings",foundAllBookingDto);
-	}
+//	
+//	
+//	//Calculate booking amount
+//	@PostMapping("/bookingAmount")
+//	public Result getBookingAmount(@Validated(BookingAmount.class) @RequestBody BookingDto bookingDto)
+//	{
+//		Double amount=this.bookingService.calculateBookingAmount(bookingDto);
+//		return new Result(true,StatusCode.SUCCESS,"Total booking amount has been calculated",amount);
+//	}
+//	
+//	
+//	@GetMapping("/cancel/{bookingId}")
+//	public Result cancelBooking(@PathVariable Integer bookingId)
+//	{
+//		Double  refundAmount=this.bookingService.cancelBookingById(bookingId);
+//		return  new Result(true,StatusCode.SUCCESS,"Ticket cancelled Successfully, refund amount will be delivered",refundAmount);
+//		
+//	}
+//	
+//	@GetMapping("/{userId}")
+//	public Result getAllBookings(@PathVariable Integer userId)
+//	{
+//		List<Booking> foundAllBooking=this.bookingService.getAllBooking(userId);
+//	      List<BookingDto>  foundAllBookingDto=foundAllBooking.stream()
+//	    		  .map((booking) -> this.bookingToBookingDtoConverter.convert(booking))
+//	    		  .collect(Collectors.toList());
+//		 
+//		  return new Result(true,StatusCode.SUCCESS,"All bookings",foundAllBookingDto);
+//	}
 
 
 	

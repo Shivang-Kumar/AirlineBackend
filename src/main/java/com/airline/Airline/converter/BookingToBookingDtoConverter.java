@@ -13,13 +13,15 @@ public class BookingToBookingDtoConverter implements Converter<Booking,BookingDt
 	public BookingDto convert(Booking source) {
 		BookingDto bookingDto=new BookingDto(
 				source.getBookingId(),
-				source.getFlightId(),
-				source.getUserId(),
+			source.getUser().getUserId(),
 				source.getNoOfSeats(),
-				source.getSeatCategory(),
-				source.getDateOfTravel(),
+				
+				source.getFlightSchedule().getFlightScheduleId(),
+				
+				source.getDateOfBooking(),
+				source.getSeatClass(),
 				source.getBookingStatus(),
-				source.getBookingAmount()
+				source.getPassengers()
 				);
 		
 		return bookingDto;
