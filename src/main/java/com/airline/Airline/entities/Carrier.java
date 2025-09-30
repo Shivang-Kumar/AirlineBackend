@@ -4,6 +4,7 @@ package com.airline.Airline.entities;
 
 import java.io.Serializable;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
@@ -22,12 +23,16 @@ public class Carrier implements Serializable {
 	
 	String carrierName;
 	
+	
 	Integer discountPercentageThirtyDaysAdvanceBooking;
 	Integer discountPercentageSixDaysAdvanceBooking;
 	Integer discountPercentageNinteyDaysAdvanceBooking;
 	Integer bulkDiscountBooking;
+	@Column(name = "refund_cancel_2d_before")
 	Integer refundPercentageForTicketCancellation2DaysBeforeTravelDate;
+	@Column(name = "refund_cancel_10d_before")
 	Integer refundPercentageForTicketCancellation10DaysBeforeTravelDate;
+	@Column(name = "refund_cancel_20d_before")
 	Integer refundPercentageForTicketCancellation20DaysBeforeTravelDate;
 	Integer silverUserDiscount;
 	Integer goldUserDiscount;

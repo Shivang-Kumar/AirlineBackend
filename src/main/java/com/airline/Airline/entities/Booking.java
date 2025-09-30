@@ -5,6 +5,7 @@ package com.airline.Airline.entities;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -29,7 +30,7 @@ public class Booking {
 	
 	Integer noOfSeats;
 
-	@OneToMany(mappedBy="booking")
+	@OneToMany(mappedBy="booking", cascade=CascadeType.ALL)
 	List<Passenger> passengers;
 	LocalDateTime dateOfBooking;
 	String bookingStatus;

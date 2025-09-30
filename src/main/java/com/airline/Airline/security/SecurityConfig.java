@@ -49,8 +49,8 @@ public class SecurityConfig  {
 	        }))
 	        .authorizeHttpRequests((auth) -> auth
 	            .requestMatchers("/public/**", "/h2-console/**").permitAll()
-	            .requestMatchers("/admin/").hasRole("Admin")
-	            .requestMatchers("/user/").hasRole("User")
+	            .requestMatchers("/admin/**").hasRole("Admin")
+	            .requestMatchers("/user/**").hasRole("User")
 	            .anyRequest().authenticated()
 	        )
 	        .headers(headers -> headers.frameOptions().sameOrigin())

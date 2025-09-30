@@ -1,5 +1,7 @@
 package com.airline.Airline.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,6 +23,18 @@ public class Passenger {
 	Booking booking;
 	
 	
+	public Booking getBooking() {
+		return booking;
+	}
+
+
+
+	public void setBooking(Booking booking) {
+		this.booking = booking;
+	}
+
+
+
 	public Passenger() {
 		super();
 	}
