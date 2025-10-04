@@ -3,9 +3,11 @@ package com.airline.Airline.Dto;
 
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.airline.Airline.entities.Booking;
 import com.airline.Airline.validation.FlightScheduleRegister;
 
 import jakarta.validation.constraints.FutureOrPresent;
@@ -29,7 +31,9 @@ public record FlightScheduleDto(
 		Integer economyClassBookedDiscount,
 		
 		@NotNull(message="Executive class booked discount is required",groups={FlightScheduleRegister.class})
-		Integer executiveClassBookedDiscount
+		Integer executiveClassBookedDiscount,
+		
+		List<Booking> bookings
 		){
 
 }

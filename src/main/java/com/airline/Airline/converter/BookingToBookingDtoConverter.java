@@ -21,6 +21,7 @@ public class BookingToBookingDtoConverter implements Converter<Booking,BookingDt
 				source.getDateOfBooking(),
 				source.getSeatClass(),
 				source.getBookingStatus(),
+				source.getBookingAmount(),
 				source.getPassengers()
 				);
 		
