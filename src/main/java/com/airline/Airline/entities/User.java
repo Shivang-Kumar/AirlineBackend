@@ -2,11 +2,15 @@ package com.airline.Airline.entities;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 
@@ -35,6 +39,27 @@ public class User implements Serializable{
 	private int zipCode;
 	private Date date;
 	
+
+	@OneToMany(mappedBy = "user")
+	@JsonIgnore
+	List<Booking> booking;
+	
+	
+	public List<Booking> getBooking() {
+		return booking;
+	}
+
+
+	public void setBooking(List<Booking> booking) {
+		this.booking = booking;
+	}
+
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+
+
 	
 	public User() {
 		super();

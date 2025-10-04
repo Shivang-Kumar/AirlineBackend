@@ -20,6 +20,7 @@ public class Passenger {
 	
 	
 	@ManyToOne
+	@JsonIgnore
 	Booking booking;
 	
 	

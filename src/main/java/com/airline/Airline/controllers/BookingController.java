@@ -1,8 +1,12 @@
 package com.airline.Airline.controllers;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,7 +28,6 @@ import com.airline.Airline.validation.BookingAmount;
 import com.airline.Airline.validation.BookingRegister;
 
 @RestController
-@RequestMapping("/user/booking")
 public class BookingController {
 	
 	
@@ -46,7 +49,7 @@ public class BookingController {
 
 
 	//Booking a new seat
-	@PostMapping
+	@PostMapping("/user/booking")
 	public Result addBooking( @Validated(BookingRegister.class)  @RequestBody BookingDto bookingDto)
 	{
 		Booking booking=this.bookingDtoToBookingConverter.convert(bookingDto);
@@ -55,8 +58,11 @@ public class BookingController {
 		BookingDto savedBookingDto=this.bookingToBookingDtoConverter.convert(savedBooking);
 		return new Result(true,StatusCode.SUCCESS,"Booking Successfull",savedBookingDto);
 	}
-//	
-//	
+
+		@GetMapping("/public/booking/{date}")	public Result getAllBookingByDate(@PathVariable LocalDate date)	{			List<Booking> bookingByDate=this.bookingService.findAllBookingByDate(date);
+	    List<BookingDto> bookingByDateDto=bookingByDate.stream().map((x) -> bookingToBookingDtoConverter.convert(x)).collect(Collectors.toList());	    	    	return new Result(true, StatusCode.SUCCESS, "All Booking By date is :",bookingByDateDto);	}
+	
+	
 //	//Calculate booking amount
 //	@PostMapping("/bookingAmount")
 //	public Result getBookingAmount(@Validated(BookingAmount.class) @RequestBody BookingDto bookingDto)

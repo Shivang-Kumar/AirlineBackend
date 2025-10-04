@@ -3,6 +3,8 @@ package com.airline.Airline.repositories;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -13,7 +15,7 @@ import com.airline.Airline.entities.Flight;
 @Repository
 public interface FlightRepository extends JpaRepository<Flight, Integer> {
 
-	List<Flight> findByOriginContainingAndDestinationContaining(String origin, String destination);
+	Page<Flight> findByOriginContainingAndDestinationContaining(String origin, String destination,Pageable page);
 
 
 	@Modifying

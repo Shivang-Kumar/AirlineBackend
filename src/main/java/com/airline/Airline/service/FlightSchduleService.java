@@ -1,10 +1,14 @@
 package com.airline.Airline.service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.airline.Airline.entities.Flight;
@@ -53,9 +57,9 @@ public class FlightSchduleService {
 
 	}
 
-	public List<FlightSchedule> searchFlight(SearchDto searchDto) {
-		List<Flight> flights = this.flightRepository.findByOriginContainingAndDestinationContaining(searchDto.origin(),
-				searchDto.destination());
+	public Page<FlightSchedule> searchFlight(SearchDto searchDto,Pageable pageable) {
+		Page<Flight> flights = this.flightRepository.findByOriginContainingAndDestinationContaining(searchDto.origin(),
+				searchDto.destination(),pageable);
 		List<FlightSchedule> schedule = this.flightSchduleRepository.findAll();
 		List<FlightSchedule> ans = new ArrayList<>();
 		for (FlightSchedule s : schedule) {
@@ -66,7 +70,12 @@ public class FlightSchduleService {
 				}
 			}
 		}
-		return ans;
+		return new PageImpl(ans) ;
+	}
+
+	public List<FlightSchedule> findByDate(String date) {
+		LocalDateTime newDate=LocalDateTime.parse(date);
+		return this.flightSchduleRepository.findByDateOfTravel(newDate);
 	}
 
 }

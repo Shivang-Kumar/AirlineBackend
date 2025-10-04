@@ -5,11 +5,14 @@ package com.airline.Airline.entities;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
@@ -25,18 +28,23 @@ public class Booking {
     Integer bookingId;
     
 	
-	@OneToOne
+	@ManyToOne
+	@JoinColumn(name = "user_user_id", nullable = false) 
+	@JsonIgnore
 	User user;
 	
 	Integer noOfSeats;
 
 	@OneToMany(mappedBy="booking", cascade=CascadeType.ALL)
+	@JsonIgnore
 	List<Passenger> passengers;
 	LocalDateTime dateOfBooking;
 	String bookingStatus;
 	Integer bookingAmount;
 	
-	@OneToOne
+	@ManyToOne
+	@JoinColumn(name = "flight_schedule_flight_schedule_id", nullable = false)
+	@JsonIgnore
 	FlightSchedule flightSchedule;
 	String  seatClass;
 	String paymentStatus;

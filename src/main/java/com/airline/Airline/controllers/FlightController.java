@@ -75,6 +75,8 @@ public class FlightController {
 		
 	}
 	
+	
+	
 	@GetMapping
 	public Result getAllFlight()
 	{

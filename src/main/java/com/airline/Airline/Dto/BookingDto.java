@@ -41,6 +41,7 @@ public record BookingDto(
 		@NotEmpty(message = "Seat category is required",groups = {BookingRegister.class ,BookingAmount.class})
 		String seatClass,
 		String bookingStatus,
+		Integer bookingAmount,
 		@NotEmpty(message="Passenger list is required" , groups= {BookingRegister.class})
 		List<Passenger> passengers		
 	){

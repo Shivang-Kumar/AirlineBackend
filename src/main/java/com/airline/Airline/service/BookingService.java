@@ -166,6 +166,13 @@ public class BookingService {
 	}
 
 
+	public List<Booking> findAllBookingByDate(LocalDate date) {
+		LocalDateTime start=date.atStartOfDay();
+		LocalDateTime end=date.plusDays(1).atStartOfDay();
+		return this.bookingRepository.findByDateOfBooking(start,end);
+	}
+
+
 //	public Double cancelBookingById(Integer bookingId) {
 //		
 //		System.out.println("Bokking id readed in cancel booking by id"+bookingId);

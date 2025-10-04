@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.core.annotation.MergedAnnotations.Search;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.airline.Airline.Dto.FlightScheduleDto;
 import com.airline.Airline.Dto.SearchDto;
+import com.airline.Airline.entities.Flight;
 import com.airline.Airline.entities.FlightSchedule;
 import com.airline.Airline.converter.FlightDtoToFlightConverter;
 import com.airline.Airline.converter.FlightSchduleDtoToFlightSchedule;
@@ -61,6 +64,14 @@ public class FlightScheduleController {
 		return new Result(true, StatusCode.SUCCESS, "Found the schduled flight", flightSchduleDto);
 	}
 
+	@GetMapping("/public/flightSchedule/{date}")
+	public Result getFlightsByDate(@PathVariable String date) {
+		List<FlightSchedule> flightScheduleByDate = this.flightSchduleService.findByDate(date);
+		List<FlightScheduleDto> flightScheduleDtoByDate = flightScheduleByDate.stream()
+				.map(x -> flightSchduleToFlightScheduleDto.convert(x)).collect(Collectors.toList());
+		return new Result(true, StatusCode.SUCCESS,"All flight Schedule by date are:", flightScheduleDtoByDate);
+	}
+
 	@GetMapping("/public/flightSchdule")
 	public Result getAllFlightSchdule() {
 		List<FlightSchedule> allSchdule = this.flightSchduleService.getAllSchdule();
@@ -72,9 +83,9 @@ public class FlightScheduleController {
 	}
 
 	@PostMapping("/public/flightSchdule/searchFlight")
-	public Result searchFlight(@Validated(SearchFlight.class) @RequestBody SearchDto searchDto) {
-		List<FlightSchedule> foundFlight = this.flightSchduleService.searchFlight(searchDto);
-		return new Result(true, StatusCode.SUCCESS, "Found flights", foundFlight);
+	public Result searchFlight(@Validated(SearchFlight.class) @RequestBody SearchDto searchDto, Pageable pageable) {
+		Page<FlightSchedule> foundFlightPage = this.flightSchduleService.searchFlight(searchDto, pageable);
+		return new Result(true, StatusCode.SUCCESS, "Found flights", foundFlightPage);
 	}
 
 }
