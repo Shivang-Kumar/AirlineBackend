@@ -1,5 +1,7 @@
 package com.airline.Airline.controllers;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.airline.Airline.Dto.DynamicResponseDto;
 import com.airline.Airline.Dto.FlightScheduleDto;
 import com.airline.Airline.Dto.SearchDto;
 import com.airline.Airline.entities.Flight;
@@ -86,6 +89,13 @@ public class FlightScheduleController {
 	public Result searchFlight(@Validated(SearchFlight.class) @RequestBody SearchDto searchDto, Pageable pageable) {
 		Page<FlightSchedule> foundFlightPage = this.flightSchduleService.searchFlight(searchDto, pageable);
 		return new Result(true, StatusCode.SUCCESS, "Found flights", foundFlightPage);
+	}
+	
+	@GetMapping("/public/flightSchdule/summary/{date}")
+	public Result flightSummary(@PathVariable LocalDateTime date)
+	{
+		List<DynamicResponseDto> summary=this.flightSchduleService.getSummary(date);
+		return new Result(true,StatusCode.SUCCESS,"Here is the summary",summary);
 	}
 
 }

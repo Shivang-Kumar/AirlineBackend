@@ -1,5 +1,6 @@
 package com.airline.Airline.service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,8 +12,10 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.airline.Airline.entities.Carrier;
 import com.airline.Airline.entities.Flight;
 import com.airline.Airline.entities.FlightSchedule;
+import com.airline.Airline.Dto.DynamicResponseDto;
 import com.airline.Airline.Dto.SearchDto;
 import com.airline.Airline.Exception.ObjectNotFoundException;
 import com.airline.Airline.repositories.FlightRepository;
@@ -76,6 +79,36 @@ public class FlightSchduleService {
 	public List<FlightSchedule> findByDate(String date) {
 		LocalDateTime newDate=LocalDateTime.parse(date);
 		return this.flightSchduleRepository.findByDateOfTravel(newDate);
+	}
+
+	public List<DynamicResponseDto> getSummary(LocalDateTime date) {
+		List<FlightSchedule> allFlightScheduleByDate=this.flightSchduleRepository.findByDateOfTravel(date);
+		List<DynamicResponseDto> summary=new ArrayList<>();
+		for(FlightSchedule flightSchedule:allFlightScheduleByDate)
+		{
+			
+			
+			
+			DynamicResponseDto thisSummary=new DynamicResponseDto(); 
+			Flight flight=flightSchedule.getFlight();
+			Carrier carrier=flight.getCarrier();
+			
+			
+			Integer totalPassenger=flightSchedule.getBooking().stream().map((x) -> x.getNoOfSeats()).reduce(0,(a,b) -> a+b);
+			
+			thisSummary.add("Flight Schedule ID:", flightSchedule.getFlightScheduleId())
+			.add("Carrier Name", carrier.getCarrierName())
+			.add("Source", flight.getOrigin())
+			.add("destination", flight.getDestination())
+			.add("time", flightSchedule.getDateOfTravel())
+			.add("total Passengers", totalPassenger)
+			.build();
+			
+			summary.add(thisSummary);
+		}
+		
+		return summary;
+		
 	}
 
 }

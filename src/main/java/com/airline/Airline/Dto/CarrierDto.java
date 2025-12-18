@@ -14,25 +14,25 @@ public record CarrierDto(int carrierId ,
 		
 		
 		@NotNull(message="Discount % for 30 days advance booking is required" , groups={RegisterCarrier.class})
-Integer discountPercentageThirtyDaysAdvanceBooking,
+		Integer discountPercentageThirtyDaysAdvanceBooking,
 		@NotNull(message="Discount % for 6 days advance booking is required" , groups={RegisterCarrier.class})
-Integer discountPercentageSixDaysAdvanceBooking,
+		Integer discountPercentageSixDaysAdvanceBooking,
 		@NotNull(message="Discount % for 90 days advance booking is required" , groups={RegisterCarrier.class})
-Integer discountPercentageNinteyDaysAdvanceBooking,
+		Integer discountPercentageNinteyDaysAdvanceBooking,
 		@NotNull(message="Bulk discount booking is required" , groups={RegisterCarrier.class})
-Integer bulkDiscountBooking,
+		Integer bulkDiscountBooking,
 		@NotNull(message="Refund % for ticket cancellation 2 days before travel date is required" , groups={RegisterCarrier.class})
-Integer refundPercentageForTicketCancellation2DaysBeforeTravelDate,
+		Integer refundPercentageForTicketCancellation2DaysBeforeTravelDate,
 		@NotNull(message="Refund % for ticket cancellation 10 days before travel date is required" , groups={RegisterCarrier.class})
-Integer refundPercentageForTicketCancellation10DaysBeforeTravelDate,
+		Integer refundPercentageForTicketCancellation10DaysBeforeTravelDate,
 		@NotNull(message="Refund % for ticket cancellation 20 days before travel date is required" , groups={RegisterCarrier.class})
-Integer refundPercentageForTicketCancellation20DaysBeforeTravelDate,
+		Integer refundPercentageForTicketCancellation20DaysBeforeTravelDate,
 		@NotNull(message="Silver user discount is required" , groups={RegisterCarrier.class})
-Integer silverUserDiscount,
+		Integer silverUserDiscount,
 		@NotNull(message="Gold user discount is required" , groups={RegisterCarrier.class})
-Integer goldUserDiscount,
+		Integer goldUserDiscount,
 		@NotNull(message="Platinum user discount is required" , groups={RegisterCarrier.class})
-Integer platinumUserDiscount
+		Integer platinumUserDiscount
 		
 		) {
 
